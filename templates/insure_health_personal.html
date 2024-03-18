@@ -1,0 +1,279 @@
+{% extends 'base_user.html' %}
+
+{% block Title %}
+Страхование несчастных случаев
+{% endblock %}
+
+{% block body %}
+<html>
+<head>
+    <style>
+        body {
+              background-color: white;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              height: 100vh;
+              margin: 0;
+            }
+
+            .form-container {
+              margin-top: 250px;
+              background-color: #f2f2f2;
+              border-radius: 10px; /* Закругление углов формы */
+              padding: 20px;
+              width: 1296px;
+            }
+
+
+
+            .form-container label {
+              display: block;
+              margin-bottom: 10px;
+            }
+
+            .form-container input[type="text"] {
+              width: 100%;
+              padding: 5px;
+              border-radius: 10px; /* Закругление углов текстовых полей */
+              border: 1px solid #ccc;
+            }
+
+    .aaa {
+    display: inline-block;
+    text-decoration: none;
+    font-size: 18px;
+    color: black;
+
+    }
+
+    .aaa:hover {
+    color: red;
+    }
+
+     .form-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+
+    }
+
+    .form-row label {
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+ label, select, input {
+    border-radius: 6px;
+    padding: 5px;
+  }
+
+        .custom-button {
+      border-radius: 5px; /* Задает радиус скругления углов */
+      background-color: #5AE8C6; /* Задает цвет фона кнопки */
+      color: #ffffff; /* Задает цвет текста на кнопке */
+      padding: 10px 20px; /* Задает отступы внутри кнопки */
+      border: none; /* Удаляет границу кнопки */
+      transition: transform 0.2s;
+      display: block;
+      margin-top: 20px;
+
+    }
+
+    .custom-button:hover {
+      background-color: #02E2A6; /* Измените цвет на желаемый */
+      color: white;
+      border-color: #02E2A6;
+      transform: scale(1.05);
+    }
+    </style>
+</head>
+<body>
+<div class="form-container">
+<h3>Страхование несчастных случаев <a class="aaa"
+                                   href="https://asoba.by/wp-content/uploads/2023/11/Правила-страхования-4-с-памяткой.pdf"
+                                   target="_blank" download> <img
+        src="{{url_for('static', filename = 'image/file-earmark-arrow-down.svg')}}" alt="Маленькая картинка">
+</a>
+</h3>
+    <form action="/insure_health_personal" method="POST">
+        <div class="form-row">
+            <label>Срок действия договора: c</label>
+            <input type="date" id="start-date" name="start_date" onchange="setEndDate()" placeholder="Выберите дату">
+
+            <label>по</label>
+            <input type="date" id="end-date" name="end_date" readonly>
+        </div>
+            <label>ФИО:</label>
+            <input type="text" id="full_name" name="full_name" placeholder="Введите ваше ФИО" required>
+
+            <label>Паспортные данные:</label>
+            <input type="text" id="passport_data" name="passport_data" placeholder="Введите ваши паспортные данные" required>
+            <label>Ваш возраст:</label>
+            <input type="number" id="age" name="age" min="18" max="130" placeholder="Введите ваш возраст" required>
+            <label>Страховая сумма:</label>
+            <input type="number" id="coverage_amount" name="coverage_amount" min="0" placeholder="Введите страховую сумму" required>
+            <label>Длительность страхования (в месяцах):</label>
+            <input type="number" id="duration" name="duration" min="1" placeholder="Введите длительность страхования" required>
+            <label>Номер телефона:</label>
+            <input type="text" id="phone-input_yr_litso" name="phone_number" value="+375" oninput="formatPhoneNumber()" maxlength="13">
+
+
+            <label>Опции страхования:</label>
+            <div>
+                <input type="checkbox" id="additional_option_ticks" name="additional_option_ticks"> Страхование от клещей
+            </div>
+            <div>
+                <input type="checkbox" id="additional_option_diseases" name="additional_option_diseases"> Страхование от внезапных болезней
+            </div>
+        <div class="form-row">
+            <label>Стоимость страхования:</label>
+            <span id="cost_value"></span>
+            <input type="hidden" id="insurance_cost" name="insurance_cost">
+        </div>
+        <button type="submit" class="custom-button">Отправить</button>
+    </form>
+</div>
+<script>
+    // При изменении значения поля "Вариант страхования"
+    document.getElementById("insurance_option").addEventListener("change", function() {
+        var option = this.value;
+        var individualInsurance = document.getElementById("individual_insurance");
+        var sharedInsurance = document.getElementById("shared_insurance");
+
+        if (option === "system_places") {
+            individualInsurance.style.display = "block";
+            sharedInsurance.style.display = "none";
+        } else if (option === "flat_system") {
+            individualInsurance.style.display = "none";
+            sharedInsurance.style.display = "block";
+        }
+    });
+</script>
+<script>
+    // Получаем текущую дату
+    var today = new Date().toISOString().split('T')[0];
+
+    // Находим поле ввода даты по его ID
+    var startDateInput = document.getElementById('start-date');
+
+    // Устанавливаем минимальную дату для поля ввода
+    startDateInput.min = today;
+</script>
+<script>
+    function setEndDate() {
+        var startDate = document.getElementById('start-date').value;
+        var endDate = new Date(startDate);
+        endDate.setFullYear(endDate.getFullYear() + 1);
+
+        var endDateInput = document.getElementById('end-date');
+        endDateInput.value = endDate.toISOString().substr(0, 10);
+    }
+</script>
+<script>
+    // Валидация формы перед отправкой
+    var form = document.querySelector('form');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault(); // Предотвращаем отправку формы
+
+        // Выполняем валидацию полей
+        var startDateInput = document.querySelector('input[name="start_date"]');
+        var endDateInput = document.querySelector('input[name="end_date"]');
+        var fullNameInput = document.querySelector('input[name="full_name"]');
+        var passportDataInput = document.querySelector('input[name="passport_data"]');
+        var ageInput = document.querySelector('input[name="age"]');
+        var coverageAmountInput = document.querySelector('input[name="coverage_amount"]');
+        var durationInput = document.querySelector('input[name="duration"]');
+
+        if (startDateInput.value === '') {
+            alert('Пожалуйста, выберите дату начала действия договора.');
+            return;
+        }
+
+        if (endDateInput.value === '') {
+            alert('Пожалуйста, выберите дату окончания действия договора.');
+            return;
+        }
+
+        if (fullNameInput.value === '') {
+            alert('Пожалуйста, введите ваше ФИО.');
+            return;
+        }
+
+        if (passportDataInput.value === '') {
+            alert('Пожалуйста, введите ваши паспортные данные.');
+            return;
+        }
+
+        if (ageInput.value === '' || ageInput.value < 18) {
+            alert('Пожалуйста, введите ваш возраст (не меньше 18 лет).');
+            return;
+        }
+
+        if (coverageAmountInput.value === '' || coverageAmountInput.value <= 0) {
+            alert('Пожалуйста, введите корректную страховую сумму.');
+            return;
+        }
+
+        if (durationInput.value === '' || durationInput.value <= 0) {
+            alert('Пожалуйста, введите корректную длительность страхования.');
+            return;
+        }
+
+        // Если все поля заполнены корректно, отправляем данные на сервер
+        form.submit();
+    });
+</script>
+<script>
+    function calculateInsuranceCost() {
+        // Считываем значения полей формы
+        var ageInput = document.getElementById('age');
+        var coverageAmountInput = document.getElementById('coverage_amount');
+        var durationInput = document.getElementById('duration');
+        var additionalOptionTicksInput = document.getElementById('additional_option_ticks');
+        var additionalOptionDiseasesInput = document.getElementById('additional_option_diseases');
+        var costValueSpan = document.getElementById('cost_value');
+        var insuranceCostInput = document.getElementById('insurance_cost');
+
+        // Выполняем расчет стоимости страхования
+        var baseCost = 100; // Базовая стоимость
+        var ageFactor = ageInput.value >= 30 ? 1.8 : 1; // Коэффициент возраста: 1.2, если возраст 30 и больше, иначе 1
+        var coverageAmount = parseInt(coverageAmountInput.value);
+        var coverageFactor = coverageAmount >= 100000 ? 1.5 : 1; // Коэффициент страховой суммы: 1.5, если страховая сумма 100000 и больше, иначе 1
+        var durationFactor = parseInt(durationInput.value) * 0.1; // Коэффициент длительности страхования: 0.1 умножается на количество месяцев
+
+        var additionalOptionsCost = 0;
+        if (additionalOptionTicksInput.checked) {
+            additionalOptionsCost += 150; // Дополнительная стоимость за страхование от клещей: 150
+        }
+        if (additionalOptionDiseasesInput.checked) {
+            additionalOptionsCost += 200; // Дополнительная стоимость за страхование от внезапных болезней: 200
+        }
+
+        var totalCost = baseCost * ageFactor * coverageFactor * durationFactor + additionalOptionsCost + coverageAmount*0.2;
+
+        // Отображаем стоимость страхования на странице
+        costValueSpan.textContent = totalCost + ' BYN';
+        insuranceCostInput.value = totalCost;
+    }
+
+    // Обработчик события изменения каждого поля формы
+    var ageInput = document.getElementById('age');
+    var coverageAmountInput = document.getElementById('coverage_amount');
+    var durationInput = document.getElementById('duration');
+    var additionalOptionTicksInput = document.getElementById('additional_option_ticks');
+    var additionalOptionDiseasesInput = document.getElementById('additional_option_diseases');
+
+    ageInput.addEventListener('change', calculateInsuranceCost);
+    coverageAmountInput.addEventListener('change', calculateInsuranceCost);
+    durationInput.addEventListener('change', calculateInsuranceCost);
+    additionalOptionTicksInput.addEventListener('change', calculateInsuranceCost);
+    additionalOptionDiseasesInput.addEventListener('change', calculateInsuranceCost);
+
+    // Инициализация расчета стоимости страхования при загрузке страницы
+    calculateInsuranceCost();
+</script>
+
+
+</body>
+</html>
+{% endblock %}

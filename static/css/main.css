@@ -1,0 +1,73 @@
+/*   HEADER   */
+
+header {
+    position: sticky;
+    top: 0;
+    padding: 10px;
+    z-index: 1000;
+    background: #FFF;
+    -webkit-box-shadow: 0 5px 25px rgba(0,0,0, 0.15);
+    box-shadow: 0 5px 25px rgba(0,0,0, 0.15);
+}
+
+.header__image {
+    height: 36px;
+    width: 36px;
+}
+
+
+footer {
+    -webkit-box-shadow: 0 25px 25px rgba(0,0,0, 0.15);
+    box-shadow: 0 25px 25px rgba(0,0,0, 0.15);
+}
+
+
+.footer__image{
+    height: 30px;
+    width: 30px;
+}
+
+.btn-outline-primary {
+  background-color: #5AE8C6; /* Измените цвет на желаемый */
+  border-color: #5AE8C6;
+  color: white;
+  transition: transform 0.2s;
+}
+
+.btn-outline-primary:hover {
+  background-color: #02E2A6; /* Измените цвет на желаемый */
+  color: white;
+  border-color: #02E2A6;
+  transform: scale(1.05);
+}
+
+.sign_in__image {
+    height: 66px;
+    width: 66px;
+}
+
+.span {
+  border-radius: 5px; /* Радиус скругления углов */
+  text-align: center; /* Выравнивание текста по центру */
+  color: darkblue;
+  padding: 5px; /* Отступы вокруг значения */
+  display: inline-block; /* Отображение в виде блока для применения ширины и высоты */
+  background-color: #02E2A6; /* Измените цвет на желаемый */
+  margin-right: 20px;
+
+
+}
+
+
+
+span {
+  border-radius: 5px; /* Радиус скругления углов */
+  text-align: center; /* Выравнивание текста по центру */
+  color: darkblue;
+  padding: 5px; /* Отступы вокруг значения */
+  display: inline-block; /* Отображение в виде блока для применения ширины и высоты */
+  background-color: #02E2A6; /* Измените цвет на желаемый */
+}
+
+
+

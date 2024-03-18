@@ -1,0 +1,434 @@
+{% extends 'base_user.html' %}
+
+{% block Title%}
+КАСКО для физических лиц
+{% endblock %}
+
+{% block body %}
+<style>
+    .photo-button {
+      display: inline-block;
+      text-decoration: none;
+      color: black;
+      margin-top: 10px;
+      transition: transform 0.5s ease;
+
+    }
+
+    .photo-button img {
+      width: 280px;
+      height: auto;
+      margin-right: 20px;
+      margin-left: 20px;
+      border-radius: 8px;
+    }
+
+    .photo-button:hover {
+      transform: scale(1.05);
+    }
+
+    .text_image {
+    margin-left: 20px;
+    margin-top: 10px;
+    font-weight: 500;
+    }
+
+    .all_textt {
+    margin-top: 30px;
+    font-size: 18px
+    }
+
+    .all_text {
+    margin-top: 20px;
+    font-size: 18px
+    }
+
+    .zagolovok {
+    margin-top: 40px;
+    }
+
+    .btn {
+  background-color: #02E2A6;
+  width: 200px;
+  height: 70px;
+  color: white;
+  border-radius: 10px;
+  padding: 10px 20px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  transition: transform 0.2s;
+}
+
+.btn:hover {
+  background-color: #5AE8B2; /* Измените цвет на желаемый */
+  color: white;
+  border-color: #5AE8C6;
+  transform: scale(1.05);
+}
+</style>
+<style>
+    table.wpdtSimpleTable {
+        border-collapse: collapse;
+        border: 1px solid black;
+    }
+
+    table.wpdtSimpleTable td {
+        border: 1px solid black;
+        padding: 10px;
+    }
+</style>
+<h3 class="zagolovok">КАСКО</h3>
+<p class="all_text">Автомобиль уже давно стал неотъемлемой частью жизни сотен тысяч белорусов. Каждый день на дороге встречаются разные люди, с разными целями и планами, однако проблемы, которые могут произойти на дороге, общие для всех.</p>
+<p class="all_text">Никто не застрахован от мелких повреждений на парковке, трещин автостекол,  ДТП или угонов. Именно поэтому мы предлагаем договор страхования КАСКО в РБ – это надежный способ избежать финансовых потерь и сохранить семейный бюджет в непредвиденной ситуации.</p>
+<div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
+    <div class="uk-flex-auto uk-width-1-1@m uk-first-column">
+        <hr>
+    </div>
+</div>
+
+<div class="uk-margin-remove-top uk-margin-remove-bottom uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
+    <div class="uk-flex-auto uk-width-1-1 uk-first-column">
+        <div>
+            <div class="wpdt-c row wpDataTableContainerSimpleTable wpDataTables wpDataTablesWrapper">
+                <table id="wpdtSimpleTable-19" class="wpdtSimpleTable wpDataTable" data-column="4" data-rows="17"
+                       data-wpid="19" data-responsive="0" data-has-header="0">
+
+                    <tbody>
+                    <tr class="wpdt-cell-row ">
+                        <td class="wpdt-cell wpdt-align-center" data-cell-id="A1" data-col-index="0" data-row-index="0"
+                            style=" width:21.734985700667%;                padding:10px;">
+                            Вариант страхования / условия страхования
+                        </td>
+                        <td class="wpdt-cell wpdt-align-center" data-cell-id="B1" data-col-index="1" data-row-index="0"
+                            style=" width:24.594852240229%;                padding:10px;">
+                            КАСКО «Классический»
+                        </td>
+                        <td class="wpdt-cell wpdt-align-center" data-cell-id="C1" data-col-index="2" data-row-index="0"
+                            style=" width:27.740705433746%;                padding:10px;">
+                            Программа страхования «Стандарт»
+                        </td>
+                        <td class="wpdt-cell wpdt-align-center" data-cell-id="D1" data-col-index="3" data-row-index="0"
+                            style=" width:25.929456625357%;                padding:10px;">
+                            Программа страхования «Оптима»
+                        </td>
+                    </tr>
+                    <tr class="wpdt-cell-row ">
+                        <td class="wpdt-cell wpdt-align-center" data-cell-id="A2" data-col-index="0" data-row-index="1"
+                            style="                padding:10px;">
+                            Типы ТС принимаемые на страхование
+                        </td>
+                        <td class="wpdt-cell " data-cell-id="B2" data-col-index="1" data-row-index="1"
+                            style="                padding:10px;">
+                            мотоциклы,
+                            мотоколяски, мотороллеры, мопеды, скутеры, квадрициклы (мотоколяски);
+                            легковые, грузовые и грузопассажирские автомобили (в том числе мультивены,
+                            минивены); микроавтобусы; автобусы, тягачи, фургоны, специальные автомобили,
+                            дорожные машины, тракторы, минитракторы; прицепы (полуприцепы); комбайны;
+                            электромобили, гибридные автомобили.
+                        </td>
+                        <td class="wpdt-cell  wpdt-merged-cell " colspan="2" rowspan="1" data-cell-id="C2"
+                            data-col-index="2" data-row-index="1" style="                padding:10px;">
+                            легковые автомобили, грузопассажирские автомобили на базе легковых автомобилей, грузовые
+                            автомобили с технически допустимой общей массой не более 3,5 тонн, мультивены, минивены,
+                            микроавтобусы с числом мест для сидения до 9 включительно (включая место водителя),
+                            электромобили, гибридные автомобили * не подлежит страхованию ТС, используемое в целях
+                            обучения вождению, в качестве такси, для участия в соревнованиях, испытаниях,
+                            эксплуатируемое по договору проката.
+                        </td>
+                    </tr>
+                    <tr class="wpdt-cell-row ">
+                        <td class="wpdt-cell wpdt-align-center" data-cell-id="A3" data-col-index="0" data-row-index="2"
+                            style="                padding:10px;">
+                            Возраст ТС принимаемого на страхования
+                        </td>
+                        <td class="wpdt-cell wpdt-align-center" data-cell-id="B3" data-col-index="1" data-row-index="2"
+                            style="                padding:10px;">
+                            без ограничений
+                        </td>
+                        <td class="wpdt-cell wpdt-align-center wpdt-merged-cell " colspan="2" rowspan="1"
+                            data-cell-id="C3" data-col-index="2" data-row-index="2"
+                            style="                padding:10px;">
+                            до 7 лет включительно
+                        </td>
+                    </tr>
+                    <tr class="wpdt-cell-row ">
+                        <td class="wpdt-cell wpdt-align-center" data-cell-id="A4" data-col-index="0" data-row-index="3"
+                            style="                padding:10px;">
+                            Стоимость ТС принимаемого на страхование
+                        </td>
+                        <td class="wpdt-cell wpdt-align-center" data-cell-id="B4" data-col-index="1" data-row-index="3"
+                            style="                padding:10px;">
+                            без ограничений
+                        </td>
+                        <td class="wpdt-cell wpdt-align-center" data-cell-id="C4" data-col-index="2" data-row-index="3"
+                            style="                padding:10px;">
+                            без ограничений
+                        </td>
+                        <td class="wpdt-cell wpdt-align-center" data-cell-id="D4" data-col-index="3" data-row-index="3"
+                            style="                padding:10px;">
+                            свыше 15 000 долларов США
+                        </td>
+                    </tr>
+                    <tr class="wpdt-cell-row ">
+                        <td class="wpdt-cell wpdt-align-center" data-cell-id="A5" data-col-index="0" data-row-index="4"
+                            style="                padding:10px;">
+                            Страховые
+                            риски
+                        </td>
+                        <td class="wpdt-cell wpdt-align-center" data-cell-id="B5" data-col-index="1" data-row-index="4"
+                            style="                padding:10px;">
+                            По выбору страхователя Вариант I-VI
+                        </td>
+                        <td class="wpdt-cell wpdt-align-center wpdt-merged-cell " colspan="2" rowspan="1"
+                            data-cell-id="C5" data-col-index="2" data-row-index="4"
+                            style="                padding:10px;">
+                            без ограничений
+                        </td>
+                    </tr>
+                    <tr class="wpdt-cell-row ">
+                        <td class="wpdt-cell wpdt-align-center" data-cell-id="A6" data-col-index="0" data-row-index="5"
+                            style="                padding:10px;">
+                            Дополнительные
+                            страховые случаи покрываемые программой страхования
+                        </td>
+                        <td class="wpdt-cell wpdt-align-center wpdt-empty-cell " data-cell-id="B6" data-col-index="1"
+                            data-row-index="5" style="                padding:10px;">
+                        </td>
+                        <td class="wpdt-cell wpdt-align-center wpdt-empty-cell " data-cell-id="C6" data-col-index="2"
+                            data-row-index="5" style="                padding:10px;">
+                        </td>
+                        <td class="wpdt-cell " data-cell-id="D6" data-col-index="3" data-row-index="5"
+                            style="                padding:10px;">
+                            - повреждение
+                            (утрата) ТС при погрузке, выгрузке или транспортировке (буксировке)
+                            транспортного средства любым видом транспорта; - попадание во внутренние
+                            полости агрегатов посторонних предметов и (или) веществ (в том числе
+                            гидроудар) во время эксплуатации ТС; - повреждение электропроводки и других
+                            элементов ТС грызунами; - попадание битумных веществ на поверхность ТС, за
+                            исключением противоправных действий третьих лиц; - повреждение ТС в
+                            результате смещения, падения перевозимого груза (за исключением случаев
+                            повреждения в результате ДТП и подтвержденного документами из компетентных
+                            органов).
+                        </td>
+                    </tr>
+                    <tr class="wpdt-cell-row ">
+                        <td class="wpdt-cell wpdt-align-center" data-cell-id="A7" data-col-index="0" data-row-index="6"
+                            style="                padding:10px;">
+                            Условия
+                            хранения ТС
+                        </td>
+                        <td class="wpdt-cell wpdt-align-center" data-cell-id="B7" data-col-index="1" data-row-index="6"
+                            style="                padding:10px;">
+                            1) Охраняемая стоянка/гараж<br>
+                            2) Неохраняемая стоянка /гараж
+                        </td>
+                        <td class="wpdt-cell wpdt-align-center wpdt-merged-cell " colspan="2" rowspan="1"
+                            data-cell-id="C7" data-col-index="2" data-row-index="6"
+                            style="                padding:10px;">
+                            Без ограничений по месту хранения ТС
+                        </td>
+                    </tr>
+                    <tr class="wpdt-cell-row " style="height:132px;">
+                        <td class="wpdt-cell wpdt-align-center" data-cell-id="A8" data-col-index="0" data-row-index="7"
+                            style="                padding:10px;">
+                            Территория действия договора страхования
+                        </td>
+                        <td class="wpdt-cell wpdt-wrap-text wpdt-valign-middle" data-cell-id="B8" data-col-index="1"
+                            data-row-index="7" style="                padding:10px;">
+                            По выбору страхователя:
+                            <br>1) РБ<br>
+                            2) РБ и все страны мира
+                        </td>
+                        <td class="wpdt-cell wpdt-align-center wpdt-merged-cell " colspan="2" rowspan="1"
+                            data-cell-id="C8" data-col-index="2" data-row-index="7"
+                            style="                padding:10px;">
+                            РБ и все страны мира
+                        </td>
+                    </tr>
+                    <tr class="wpdt-cell-row ">
+                        <td class="wpdt-cell wpdt-align-center" data-cell-id="A9" data-col-index="0" data-row-index="8"
+                            style="                padding:10px;">
+                            Срок страхования
+                        </td>
+                        <td class="wpdt-cell wpdt-align-center" data-cell-id="B9" data-col-index="1" data-row-index="8"
+                            style="                padding:10px;">
+                            от 1 (одного) месяца до 1 (одного) года включительно
+                        </td>
+                        <td class="wpdt-cell wpdt-align-center wpdt-merged-cell " colspan="2" rowspan="1"
+                            data-cell-id="C9" data-col-index="2" data-row-index="8"
+                            style="                padding:10px;">
+                            1 год
+                        </td>
+                    </tr>
+                    <tr class="wpdt-cell-row ">
+                        <td class="wpdt-cell wpdt-align-center" data-cell-id="A10" data-col-index="0" data-row-index="9"
+                            style="                padding:10px;">
+                            Страховая сумма
+                        </td>
+                        <td class="wpdt-cell wpdt-align-center" data-cell-id="B10" data-col-index="1" data-row-index="9"
+                            style="                padding:10px;">
+                            В размере страховой стоимости ТС или в размере менее страховой стоимости ТС
+                        </td>
+                        <td class="wpdt-cell wpdt-align-center wpdt-merged-cell " colspan="2" rowspan="1"
+                            data-cell-id="C10" data-col-index="2" data-row-index="9"
+                            style="                padding:10px;">
+                            В размере страховой стоимости ТС
+                        </td>
+                    </tr>
+                    <tr class="wpdt-cell-row ">
+                        <td class="wpdt-cell wpdt-align-center" data-cell-id="A11" data-col-index="0"
+                            data-row-index="10" style="                padding:10px;">
+                            Валюта страховой суммы
+                        </td>
+                        <td class="wpdt-cell wpdt-align-center wpdt-merged-cell " colspan="3" rowspan="1"
+                            data-cell-id="B11" data-col-index="1" data-row-index="10"
+                            style="                padding:10px;">
+                            Белорусские рубли или иностранная валюта
+                        </td>
+                    </tr>
+                    <tr class="wpdt-cell-row ">
+                        <td class="wpdt-cell wpdt-align-center" data-cell-id="A12" data-col-index="0"
+                            data-row-index="11" style="                padding:10px;">
+                            Валюта уплаты страхового взноса
+                        </td>
+                        <td class="wpdt-cell wpdt-align-center wpdt-merged-cell " colspan="3" rowspan="1"
+                            data-cell-id="B12" data-col-index="1" data-row-index="11"
+                            style="                padding:10px;">
+                            Белорусские рубли
+                        </td>
+                    </tr>
+                    <tr class="wpdt-cell-row ">
+                        <td class="wpdt-cell wpdt-align-center" data-cell-id="A13" data-col-index="0"
+                            data-row-index="12" style="                padding:10px;">
+                            Франшиза
+                        </td>
+                        <td class="wpdt-cell wpdt-align-center" data-cell-id="B13" data-col-index="1"
+                            data-row-index="12" style="                padding:10px;">
+                            Устанавливается по соглашению сторон
+                        </td>
+                        <td class="wpdt-cell wpdt-align-center wpdt-merged-cell " colspan="2" rowspan="1"
+                            data-cell-id="C13" data-col-index="2" data-row-index="12"
+                            style="                padding:10px;">
+                            Без установления франшизы
+                        </td>
+                    </tr>
+                    <tr class="wpdt-cell-row ">
+                        <td class="wpdt-cell wpdt-align-center" data-cell-id="A14" data-col-index="0"
+                            data-row-index="13" style="                padding:10px;">
+                            Возмещение ущерба
+                        </td>
+                        <td class="wpdt-cell wpdt-align-center" data-cell-id="B14" data-col-index="1"
+                            data-row-index="13" style="                padding:10px;">
+                            1) без учета износа; <br>2) с учетом износа. Страхование ТС старше 10 лет осуществляется с
+                            учетом износа
+                        </td>
+                        <td class="wpdt-cell wpdt-align-center wpdt-merged-cell " colspan="2" rowspan="1"
+                            data-cell-id="C14" data-col-index="2" data-row-index="13"
+                            style="                padding:10px;">
+                            Без учета износа
+                        </td>
+                    </tr>
+                    <tr class="wpdt-cell-row ">
+                        <td class="wpdt-cell wpdt-align-center wpdt-merged-cell " colspan="4" rowspan="1"
+                            data-cell-id="A15" data-col-index="0" data-row-index="14"
+                            style="                padding:10px;">
+                            Выплаты без подтверждающих документов из компетентных органов
+                        </td>
+                    </tr>
+                    <tr class="wpdt-cell-row ">
+                        <td class="wpdt-cell wpdt-align-center" data-cell-id="A16" data-col-index="0"
+                            data-row-index="15" style="                padding:10px;">
+                            В случае повреждения элементов кузова и других конструктивных элементов
+                        </td>
+                        <td class="wpdt-cell wpdt-align-center" data-cell-id="B16" data-col-index="1"
+                            data-row-index="15" style="                padding:10px;">
+                            При страховании по Варианту VI (при сроке страхования 1 год) количество обращений при
+                            повреждении:
+                            деталей остекления, наружных зеркал (за исключением их корпусов) и (или) приборов внешнего
+                            освещения – не имеет ограничений;
+                        </td>
+                        <td class="wpdt-cell wpdt-align-center" data-cell-id="C16" data-col-index="2"
+                            data-row-index="15" style="                padding:10px;">
+                            количество обращений:
+                            количество обращений – не более 2 (двух) раз в период действия договора страхования;
+                            максимальный размер суммы всех выплат страхового возмещения не имеет ограничений;
+                        </td>
+                        <td class="wpdt-cell wpdt-align-center" data-cell-id="D16" data-col-index="3"
+                            data-row-index="15" style="                padding:10px;">
+                            В случае повреждения деталей остекления: количество обращений - без ограничений,
+                            максимальный размер суммы всех выплат – без ограничений.
+                        </td>
+                    </tr>
+                    <tr class="wpdt-cell-row ">
+                        <td class="wpdt-cell wpdt-align-center" data-cell-id="A17" data-col-index="0"
+                            data-row-index="16" style="                padding:10px;">
+                            В случае повреждения элементов кузова и других конструктивных элементов
+                        </td>
+                        <td class="wpdt-cell wpdt-align-center" data-cell-id="B17" data-col-index="1"
+                            data-row-index="16" style="                padding:10px;">
+                            При страховании по Варианту VI (при сроке страхования 1 год) окличество обращений элементов
+                            кузова и (или) других конструктивных элементов транспортного средства – не более 2 (двух)
+                            раз;
+                            максимальный размер суммы всех выплат страхового возмещения не может превышать 5% от
+                            страховой суммы, установленной договором страхования.
+                        </td>
+                        <td class="wpdt-cell wpdt-align-center" data-cell-id="C17" data-col-index="2"
+                            data-row-index="16" style="                padding:10px;">
+                            количество обращений – не более 2 (двух) раз в период действия договора страхования;
+                            максимальный размер суммы выплаты страхового возмещения:
+                            по каждому страховому случаю не может превышать 5% от страховой суммы, установленной
+                            договором страхования;
+                            по всем страховым случаям в совокупности не может превышать 9% от страховой суммы,
+                            установленной договором страхования;
+                        </td>
+                        <td class="wpdt-cell wpdt-align-center" data-cell-id="D17" data-col-index="3"
+                            data-row-index="16" style="                padding:10px;">
+                            количество обращений не имеет ограничений;
+                            максимальный размер суммы выплаты страхового возмещения:
+                            по каждому страховому случаю не может превышать 5% от страховой суммы, установленной
+                            договором страхования;
+                            по всем страховым случаям в совокупности не может превышать 9% от страховой суммы,
+                            установленной договором страхования;
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <style id="wpdt-custom-style-19">
+                table#wpdtSimpleTable-19{ table-layout: fixed !important; }
+                table#wpdtSimpleTable-19 td, table.wpdtSimpleTable19 th { white-space: normal !important; }
+            </style>
+            <style>
+
+                /* table font size */
+.wpdt-c.wpDataTablesWrapper table.wpdtSimpleTable,
+.wpdt-c .wpDataTablesWrapper table.wpDataTable {
+font-size:12px !important;
+}
+
+            </style>
+
+<h3 class="zagolovok">Оставить заявку</h3>
+
+
+<p class="all_text">Получить подробную консультацию по условиям страхования ОСГО и вопросам заключения договора
+    страхования Вы можете:</p>
+<ul class="all_text">
+    <li>в управлении страхования и перестрахования в г. Минске по телефону: +375 (29) 772-05-98</li>
+    <li>по адресу электронной почты: insurance@asoba.by</li>
+    <li>в любом офисе Clover</li>
+</ul>
+
+<p class="all_text">Также Вы можете оставить заявку в форме обратной связи – мы свяжемся с Вами и ответим на все
+    интересующие вопросы.</p>
+
+<a href="{{url_for('online_zayavka')}}" class="btn">Оставить заявку</a>
+
+{% endblock %}

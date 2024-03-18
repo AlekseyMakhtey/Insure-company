@@ -1,0 +1,54 @@
+{% extends 'base_user.html' %}
+
+{% block Title %}
+{% endblock %}
+
+{% block body %}<html>
+<head>
+  <title>Оплата картой</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .payment-form {
+      text-align: center;
+    }
+
+    .payment-form input[type="text"],
+    .payment-form input[type="number"] {
+      padding: 10px;
+      margin: 5px;
+    }
+
+    .payment-form input[type="submit"] {
+      padding: 10px 20px;
+      margin: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+
+</head>
+<body><br><br>
+  <div class="payment-form">
+    <h2>Оплата картой</h2>
+    <form action="/oplata" method="post" onsubmit="redirect()">
+        <p>Стоимость: {{ cost }}</p>
+
+      <input type="text" name="cardholder_name" placeholder="Имя держателя карты" required><br>
+      <input type="text" name="card_number" placeholder="Номер карты" required><br>
+      <input type="text" name="expiry_date" placeholder="Срок действия (мм/гг)" required><br>
+      <input type="number" name="cvv" placeholder="CVV" required><br>
+      <input type="submit" value="Оплатить"><br><br><br>
+    </form>
+  </div>
+</body>
+</html>
+{% endblock %}

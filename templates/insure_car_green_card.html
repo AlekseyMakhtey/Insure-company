@@ -1,0 +1,343 @@
+{% extends 'base_user.html' %}
+
+{% block Title %}
+Страхование зелёной карты
+{% endblock %}
+
+{% block body %}
+<html>
+<head>
+    <style>
+        body {
+              background-color: white;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              height: 100vh;
+              margin: 0;
+            }
+
+            .form-container {
+              margin-top: 680px;
+              background-color: #f2f2f2;
+              border-radius: 10px; /* Закругление углов формы */
+              padding: 20px;
+              width: 1296px;
+            }
+
+
+
+            .form-container label {
+              display: block;
+              margin-bottom: 10px;
+            }
+
+            .form-container input[type="text"] {
+              width: 100%;
+              padding: 5px;
+              border-radius: 10px; /* Закругление углов текстовых полей */
+              border: 1px solid #ccc;
+            }
+
+    .aaa {
+    display: inline-block;
+    text-decoration: none;
+    font-size: 18px;
+    color: black;
+
+    }
+
+    .aaa:hover {
+    color: red;
+    }
+
+     .form-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+
+    }
+
+    .form-row label {
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+ label, select, input {
+    border-radius: 6px;
+    padding: 5px;
+  }
+
+        .custom-button {
+      border-radius: 5px; /* Задает радиус скругления углов */
+      background-color: #5AE8C6; /* Задает цвет фона кнопки */
+      color: #ffffff; /* Задает цвет текста на кнопке */
+      padding: 10px 20px; /* Задает отступы внутри кнопки */
+      border: none; /* Удаляет границу кнопки */
+      transition: transform 0.2s;
+      display: block;
+      margin-top: 20px;
+
+    }
+
+    .custom-button:hover {
+      background-color: #02E2A6; /* Измените цвет на желаемый */
+      color: white;
+      border-color: #02E2A6;
+      transform: scale(1.05);
+    }
+    </style>
+</head>
+<body>
+<div class="form-container">
+<h3>Страхование зелёной карты <a class="aaa"
+                                   href="https://asoba.by/wp-content/uploads/2022/09/Правила-№-28.pdf"
+                                   target="_blank" download> <img
+        src="{{url_for('static', filename = 'image/file-earmark-arrow-down.svg')}}" alt="Маленькая картинка">
+</a>
+</h3>
+    <form action="/insure_car_green_card" method="POST">
+  <div class="form-row">
+        <label>Срок действия договора: c</label>
+        <input type="date" id="start-date" name="start_date" onchange="setEndDate()" placeholder="Выберите дату">
+
+        <label>по</label>
+        <input type="date" id="end-date" name="end_date" readonly>
+    </div>
+
+  <label for="insurance_term">Срок страхования (в месяцах):</label>
+  <input type="number" id="insurance_term" name="insurance_term" placeholder="12" required>
+
+  <label for="insure_sum">Сумма страхования:</label>
+  <input type="text" id="insure_sum" name="insure_sum" placeholder="Введите сумму страхования" required>
+
+  <label for="vehicle_type">Тип транспортного средства:</label>
+  <select id="vehicle_type" name="vehicle_type" required>
+    <option value="car">Автомобиль</option>
+    <option value="motorcycle">Мотоцикл</option>
+    <option value="truck">Грузовик</option>
+    <option value="other">Другое</option>
+  </select>
+
+  <label for="vehicle_make">Марка ТС:</label>
+  <input type="text" id="vehicle_make" name="vehicle_make" placeholder="Введите марку ТС" required>
+
+  <label for="vehicle_model">Модель ТС:</label>
+  <input type="text" id="vehicle_model" name="vehicle_model" placeholder="Введите модель ТС" required>
+
+  <label for="vehicle_year">Год выпуска:</label>
+  <input type="text" id="vehicle_year" name="vehicle_year" placeholder="Введите год выпуска автомобиля" required>
+
+  <label for="registration_number">Регистрационный номер:</label>
+  <input type="text" id="registration_number" name="registration_number" placeholder="Введите регистрационный номер" required>
+
+  <label for="owner_name">ФИО владельца:</label>
+  <input type="text" id="owner_name" name="owner_name" placeholder="Введите ФИО" required>
+
+  <label>Номер телефона:</label>
+  <input type="text" id="phone-input_yr_litso" name="phone_number" value="+375" oninput="formatPhoneNumber()" maxlength="13">
+
+
+    <label for="countries">Страны для посещения:</label>
+<select id="countries" name="countries[]" multiple required>
+  <option value="США">США</option>
+  <option value="Канада">Канада</option>
+  <option value="Мексика">Мексика</option>
+  <option value="Германия">Германия</option>
+  <option value="Франция">Франция</option>
+  <option value="Италия">Италия</option>
+  <option value="Австралия">Австралия</option>
+  <option value="Бразилия">Бразилия</option>
+  <option value="Китай">Китай</option>
+  <option value="Индия">Индия</option>
+  <option value="Япония">Япония</option>
+  <option value="Россия">Россия</option>
+  <option value="Южная Корея">Южная Корея</option>
+  <option value="Великобритания">Великобритания</option>
+  <option value="Аргентина">Аргентина</option>
+  <option value="Чили">Чили</option>
+  <option value="Колумбия">Колумбия</option>
+  <option value="Эквадор">Эквадор</option>
+  <option value="Египет">Египет</option>
+  <option value="Греция">Греция</option>
+  <option value="Исландия">Исландия</option>
+  <option value="Ирландия">Ирландия</option>
+  <option value="Ямайка">Ямайка</option>
+  <option value="Кения">Кения</option>
+  <option value="Малайзия">Малайзия</option>
+  <option value="Нидерланды">Нидерланды</option>
+  <option value="Новая Зеландия">Новая Зеландия</option>
+  <option value="Норвегия">Норвегия</option>
+  <option value="Перу">Перу</option>
+  <option value="Филиппины">Филиппины</option>
+  <option value="Польша">Польша</option>
+  <option value="Португалия">Португалия</option>
+  <option value="Саудовская Аравия">Саудовская Аравия</option>
+  <option value="Сингапур">Сингапур</option>
+  <option value="Южная Африка">Южная Африка</option>
+  <option value="Испания">Испания</option>
+  <option value="Швеция">Швеция</option>
+  <option value="Швейцария">Швейцария</option>
+  <option value="Таиланд">Таиланд</option>
+  <option value="Турция">Турция</option>
+  <option value="Украина">Украина</option>
+  <option value="Объединенные Арабские Эмираты">Объединенные Арабские Эмираты</option>
+  <option value="Уругвай">Уругвай</option>
+  <option value="Венесуэла">Венесуэла</option>
+  <option value="Вьетнам">Вьетнам</option>
+  <option value="Зимбабве">Зимбабве</option>
+</select>
+    <div class="form-row">
+        <label>Стоимость страхования:</label>
+        <span id="cost_value"></span>
+        <input type="hidden" id="insurance_cost" name="insurance_cost">
+    </div>
+    <button type="submit" class="custom-button">Отправить</button>
+</form>
+</div>
+
+<script>
+    // Получаем текущую дату
+    var today = new Date().toISOString().split('T')[0];
+
+    // Находим поле ввода даты по его ID
+    var startDateInput = document.getElementById('start-date');
+
+    // Устанавливаем минимальную дату для поля ввода
+    startDateInput.min = today;
+</script>
+<script>
+    function setEndDate() {
+        var startDate = document.getElementById('start-date').value;
+        var endDate = new Date(startDate);
+        endDate.setFullYear(endDate.getFullYear() + 1);
+
+        var endDateInput = document.getElementById('end-date');
+        endDateInput.value = endDate.toISOString().substr(0, 10);
+    }
+</script>
+<script>
+    // Валидация формы перед отправкой
+    var form = document.querySelector('form');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault(); // Предотвращаем отправку формы
+
+        // Выполняем валидацию полей
+        var startDateInput = document.querySelector('input[name="start_date"]');
+        var endDateInput = document.querySelector('input[name="end_date"]');
+        var fullNameInput = document.querySelector('input[name="full_name"]');
+        var passportDataInput = document.querySelector('input[name="passport_data"]');
+        var ageInput = document.querySelector('input[name="age"]');
+        var coverageAmountInput = document.querySelector('input[name="coverage_amount"]');
+        var durationInput = document.querySelector('input[name="duration"]');
+
+        if (startDateInput.value === '') {
+            alert('Пожалуйста, выберите дату начала действия договора.');
+            return;
+        }
+
+        if (endDateInput.value === '') {
+            alert('Пожалуйста, выберите дату окончания действия договора.');
+            return;
+        }
+
+        if (fullNameInput.value === '') {
+            alert('Пожалуйста, введите ваше ФИО.');
+            return;
+        }
+
+        if (passportDataInput.value === '') {
+            alert('Пожалуйста, введите ваши паспортные данные.');
+            return;
+        }
+
+        if (ageInput.value === '' || ageInput.value < 18) {
+            alert('Пожалуйста, введите ваш возраст (не меньше 18 лет).');
+            return;
+        }
+
+        if (coverageAmountInput.value === '' || coverageAmountInput.value <= 0) {
+            alert('Пожалуйста, введите корректную страховую сумму.');
+            return;
+        }
+
+        if (durationInput.value === '' || durationInput.value <= 0) {
+            alert('Пожалуйста, введите корректную длительность страхования.');
+            return;
+        }
+
+        // Если все поля заполнены корректно, отправляем данные на сервер
+        form.submit();
+    });
+</script>
+<script>
+function calculateInsuranceCost() {
+    // Считываем значения полей формы
+    var insuranceTermInput = document.getElementById('insurance_term');
+    var insureSumInput = document.getElementById('insure_sum');
+    var vehicleTypeInput = document.getElementById('vehicle_type');
+    var countriesInput = document.getElementById('countries');
+    var costValueSpan = document.getElementById('cost_value');
+    var insuranceCostInput = document.getElementById('insurance_cost');
+
+    // Выполняем расчет стоимости страхования
+    var baseCost = 100; // Базовая стоимость
+
+    // Факторы, влияющие на стоимость страхования
+    var termFactor = parseInt(insuranceTermInput.value) * 0.1; // Коэффициент срока страхования: 0.1 умножается на количество месяцев
+    var sumFactor = parseFloat(insureSumInput.value) / 100; // Коэффициент суммы страхования: сумма страхования делится на 100
+    var vehicleTypeFactor = getVehicleTypeFactor(vehicleTypeInput.value); // Коэффициент типа транспортного средства
+    var countriesFactor = getCountriesFactor(countriesInput.selectedOptions.length); // Коэффициент количества стран
+
+    var totalCost = baseCost * termFactor * sumFactor * vehicleTypeFactor * countriesFactor;
+
+    // Отображаем стоимость страхования на странице
+    costValueSpan.textContent = totalCost + ' BYN';
+    insuranceCostInput.value = totalCost;
+}
+
+// Функция для получения коэффициента типа транспортного средства
+function getVehicleTypeFactor(vehicleType) {
+    switch (vehicleType) {
+        case 'car':
+            return 1.2;
+        case 'motorcycle':
+            return 1.5;
+        case 'truck':
+            return 1.8;
+        default:
+            return 1;
+    }
+}
+
+// Функция для получения коэффициента количества стран
+function getCountriesFactor(countriesCount) {
+    // Определите здесь свои правила для расчета коэффициента количества стран
+    // Ниже приведен пример простого правила: чем больше стран, тем дороже страхование
+    if (countriesCount <= 5) {
+        return 1;
+    } else if (countriesCount <= 10) {
+        return 1.2;
+    } else {
+        return 1.5;
+    }
+}
+
+// Обработчик события изменения каждого поля формы
+var insuranceTermInput = document.getElementById('insurance_term');
+var insureSumInput = document.getElementById('insure_sum');
+var vehicleTypeInput = document.getElementById('vehicle_type');
+var countriesInput = document.getElementById('countries');
+
+insuranceTermInput.addEventListener('change', calculateInsuranceCost);
+insureSumInput.addEventListener('change', calculateInsuranceCost);
+vehicleTypeInput.addEventListener('change', calculateInsuranceCost);
+countriesInput.addEventListener('change', calculateInsuranceCost);
+
+// Инициализация расчета стоимости страхования при загрузке страницы
+calculateInsuranceCost();
+</script>
+
+
+</body>
+</html>
+{% endblock %}

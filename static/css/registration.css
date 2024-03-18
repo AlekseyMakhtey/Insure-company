@@ -1,0 +1,45 @@
+html,
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+{% if message %}
+  <div class="message">{{ message }}</div>
+{% endif %}
+
+.form-registration {
+  width: 100%;
+  max-width: 450px; /* Increase the max-width value as desired */
+  margin: 0 auto; /* Center the content horizontally */
+}
+
+.registration_image {
+  max-width: 100%;
+  height: 66px;
+  width: 66px;
+}
+
+.h3 {
+  margin-top: 0;
+}
+
+.form-floating {
+  margin-bottom: 0px;
+}
+
+.form-check {
+  margin-bottom: 0px;
+}
+
+.btn-primary {
+  margin-top: 0px;
+}
+
+.registration_image{
+    height: 66px;
+    width: 66px;
+}

@@ -1,0 +1,143 @@
+{% extends 'base_user.html' %}
+
+{% block Title%}
+Страхование квартир и жилых помещений
+{% endblock %}
+
+{% block body %}
+<style>
+    .photo-button {
+      display: inline-block;
+      text-decoration: none;
+      color: black;
+      margin-top: 10px;
+      transition: transform 0.5s ease;
+
+    }
+
+    .photo-button img {
+      width: 280px;
+      height: auto;
+      margin-right: 20px;
+      margin-left: 20px;
+      border-radius: 8px;
+    }
+
+    .photo-button:hover {
+      transform: scale(1.05);
+    }
+
+    .text_image {
+    margin-left: 20px;
+    margin-top: 10px;
+    font-weight: 500;
+    }
+
+    .all_textt {
+    margin-top: 30px;
+    font-size: 18px
+    }
+
+    .all_text {
+    margin-top: 20px;
+    font-size: 18px
+    }
+
+    .aaa {
+    display: block;
+    margin-top: 20px;
+    text-decoration: none;
+    font-size: 18px;
+    color: black;
+
+    }
+
+    .aaa:hover {
+    color: red;
+    }
+
+    .zagolovok {
+    margin-top: 40px;
+    }
+
+    .btn {
+  background-color: #02E2A6;
+  width: 200px;
+  height: 70px;
+  color: white;
+  border-radius: 10px;
+  padding: 10px 20px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  transition: transform 0.2s;
+}
+
+.btn:hover {
+  background-color: #5AE8B2; /* Измените цвет на желаемый */
+  color: white;
+  border-color: #5AE8C6;
+  transform: scale(1.05);
+}
+</style>
+
+<h1>Страхование квартир и жилых помещений</h1>
+
+<p class="all_text"> Сегодня недвижимость стоит дорого, а в жизни могут произойти различные непредвиденные случаи. Только застраховав свою квартиру Вы получите профессиональную помощь и защитите себя от финансовых потерь. Договор добровольного страхования жилых помещений в многоквартирных жилых домах предусматривает денежную выплату на случай происшествия, которую Вы сможете потратить на ремонт и восстановление своего жилья.</p>
+<h3 class="zagolovok">Условия страхования</h3>
+<p class="all_text"><b>На страхование принимаются:</b></p>
+<ul class="all_text">
+  <li>жилые помещения в многоквартирных жилых домах, подсобные помещения в квартире или относящиеся к квартире;</li>
+  <li>конструктивные элементы и элементы отделки, установленное  оборудование внутри жилых и подсобных помещений (квартиры);</li>
+  <li>балконы, лоджии, террасы.</li>
+</ul>
+
+<p class="all_text">На страхование <b>не</b> принимаются:</p>
+<ul class="all_text">
+  <li>аварийные жилые помещения и (или) подлежащие сносу;</li>
+  <li>жилые помещения, подлежащие переоборудованию под нежилые.</li>
+</ul>
+
+<p class="all_text">Договор добровольного страхования жилых помещений покрывает утрату (гибель) или повреждение имущества в результате наступления следующих обстоятельств:</p>
+<ul class="all_text">
+  <li>стихийных бедствий;</li>
+  <li>несчастных случаев (пожар, взрыв, падение деревьев, наезд транспортных средств, падение летательных аппаратов, авария отопительной системы,  водопроводных и канализационных сетей, авария внутренних водостоков, проникновение воды в результате проведения действий по ликвидации пожаров, проникновение воды из соседних помещений);</li>
+  <li>неправомерных действий третьих лиц.</li>
+</ul>
+
+<p class="all_text">Срок действия договора страхования составляет от 1 года до 5 лет.</p>
+<p class="all_text">Договор страхования заключается без осмотра.</p>
+<p class="all_text">Оплата страхового взноса по Вашему желанию может производиться как единовременно, так и в рассрочку: в два срока, ежеквартально, ежемесячно. Лучшая стоимость страхования квартиры и имущества в Clover.</p>
+<p class="all_text">Договор добровольного страхования жилых помещений СООО «Clover» предусматривает широкий перечень страховых рисков, выгодные страховые тарифы и гибкую систему оплаты.</p>
+
+
+<h3 class="zagolovok">Документы</h3>
+<a class="aaa" href="https://asoba.by/wp-content/uploads/2020/08/%D0%9F%D1%80%D0%B0%D0%B2%D0%B8%D0%BB%D0%B0-%E2%84%9625.pdf"
+   download> <img src="{{url_for('static', filename = 'image/file-earmark-arrow-down.svg')}}" alt="Маленькая картинка"> Правила страхования</a>
+<a class="aaa" href="https://asoba.by/wp-content/uploads/2020/08/%D0%91%D0%A1%D0%A2-%D0%9F%D1%80%D0%B0%D0%B2%D0%B8%D0%BB-%E2%84%9625.pdf"
+   download> <img src="{{url_for('static', filename = 'image/file-earmark-arrow-down.svg')}}" alt="Маленькая картинка"> Тарифы</a>
+
+
+<h3 class="zagolovok">Оставить заявку</h3>
+
+
+<p class="all_text">Получить подробную консультацию по условиям страхования ОСГО и вопросам заключения договора
+    страхования Вы можете:</p>
+<ul class="all_text">
+    <li>в управлении страхования и перестрахования в г. Минске по телефону: +375 (29) 772-05-98</li>
+    <li>по адресу электронной почты: insurance@clover.by</li>
+    <li>в любом офисе Clover</li>
+</ul>
+
+<p class="all_text">Также Вы можете оставить заявку в форме обратной связи – мы свяжемся с Вами и ответим на все
+    интересующие вопросы.</p>
+
+<a href="{{url_for('online_zayavka')}}" class="btn">Оставить заявку</a>
+
+{% endblock %}

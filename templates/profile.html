@@ -1,0 +1,153 @@
+{% extends 'base_user.html' %}
+
+{% block Title %}
+Мой профиль
+{% endblock %}
+
+{% block body %}
+<html>
+<head>
+    <style>
+        body {
+              background-color: white;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              height: 100vh;
+              margin: 0;
+        }
+
+            .form-container {
+              margin-top: 50px;
+              background-color: #f2f2f2;
+              border-radius: 10px; /* Закругление углов формы */
+              padding: 20px;
+              width: 1296px;
+            }
+            .padding_green_card {
+            margin-top: 30px;
+            }
+            .padding {
+            margin-top: 10px;
+            }
+
+            .custom-button {
+      border-radius: 5px; /* Задает радиус скругления углов */
+      background-color: #5AE8C6; /* Задает цвет фона кнопки */
+      color: #ffffff; /* Задает цвет текста на кнопке */
+      padding: 10px 20px; /* Задает отступы внутри кнопки */
+      border: none; /* Удаляет границу кнопки */
+      transition: transform 0.2s;
+      display: block;
+      margin-top: 20px;
+
+    }
+
+    .custom-button:hover {
+      background-color: red; /* Измените цвет на желаемый */
+      color: white;
+      border-color: #02E2A6;
+      transform: scale(1.05);
+    }
+
+
+    </style>
+</head>
+<body>
+<div class="form-container">
+    <h3>Мой профиль</h3>
+
+    <label class="padding" for="name">Имя:</label>
+    {% if name %}
+    <span id="name">{{ name }}</span>
+    {% endif %}
+
+    <label for="email">Почта:</label>
+    {% if email %}
+    <span id="email">{{ email }}</span>
+    {% endif %}
+
+    <div class="padding_green_card">
+        <label>Получена зелёная карта на</label>
+        {% if vehicle_make and vehicle_model and vehicle_year %}
+        <span id="vehicle_make">{{ vehicle_make }}</span>
+        <span id="vehicle_model">{{ vehicle_model }}</span>
+        <span id="vehicle_year">{{ vehicle_year }}</span>
+        <label>года выпуска.</label>
+        {% endif %}
+    </div>
+
+    <div>
+        <label class="padding">Получено на время с </label>
+        {% if start_date_green_card and end_date_green_card %}
+        <span id="start_date_green_card">{{ start_date_green_card }}</span>
+        <label>по </label>
+        <span id="end_date_green_card">{{ end_date_green_card }}</span>
+        {% endif %}
+    </div>
+
+    <label class="padding">Разрешено въезжать в :</label>
+    {% if countries_str %}
+    <span id="countries_str">{{ countries_str }}</span>
+    {% endif %}
+
+    <div class="padding_green_card">
+        <label>Также имеется обязательное государственное страхование транспортных средств на</label>
+        {% if car_brand and car_model and car_year %}
+        <span id="car_brand">{{ car_brand }}</span>
+        <span id="car_model">{{ car_model }}</span>
+        <span id="car_year">{{ car_year }}</span>
+        <label>года выпуска.</label>
+        {% endif %}
+        {% if car_registration_number %}
+        <span id="car_registration_number">{{ car_registration_number }}</span>
+        {% endif %}
+    </div>
+    <div>
+        <label>Застраховано с </label>
+        {% if start_date_osgo and end_date_osgo %}
+        <span id="start_date_osgo">{{ start_date_osgo }}</span>
+        <label>по </label>
+        <span id="end_date_osgo">{{ end_date_osgo }}</span>
+        {% endif %}
+    </div>
+    <div>
+        <label class="padding">Стоимость страхования :</label>
+        {% if insurance_cost %}
+        <span id="insurance_cost">{{ insurance_cost }}</span>
+        {% endif %}
+    </div>
+
+    <div class="padding_green_card">
+        <label>Также Вы </label>
+        {% if full_name and start_date_personal and end_date_personal %}
+        <span id="full_name">{{ full_name }}</span>
+        <label>застрахованы с </label>
+        <span id="start_date_personal">{{ start_date_personal }}</span>
+        <label>по </label>
+        <span id="end_date_personal">{{ end_date_personal }}</span>
+        {% endif %}
+    </div>
+    <div>
+        <label class="padding">Паспорт :</label>
+        {% if passport_data %}
+        <span id="passport_data">{{ passport_data }}</span>
+        {% endif %}
+    </div>
+    <div>
+        <label class="padding">Стоимость страхования :</label>
+        {% if insurance_cost_personal %}
+        <span id="insurance_cost_personal">{{ insurance_cost_personal }}</span>
+        {% endif %}
+    </div>
+
+    <form action="/profile" method="POST">
+
+        <div>
+            <button class="custom-button">Выход</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+{% endblock %}

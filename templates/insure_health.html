@@ -1,0 +1,308 @@
+{% extends 'base_user.html' %}
+
+{% block Title %}
+Страхование пассажиров и водителей
+{% endblock %}
+
+{% block body %}
+<html>
+<head>
+    <style>
+        body {
+              background-color: white;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              height: 100vh;
+              margin: 0;
+            }
+
+            .form-container {
+              margin-top: 400px;
+              background-color: #f2f2f2;
+              border-radius: 10px; /* Закругление углов формы */
+              padding: 20px;
+              width: 1296px;
+            }
+
+
+
+            .form-container label {
+              display: block;
+              margin-bottom: 10px;
+            }
+
+            .form-container input[type="text"] {
+              width: 100%;
+              padding: 5px;
+              border-radius: 10px; /* Закругление углов текстовых полей */
+              border: 1px solid #ccc;
+            }
+
+    .aaa {
+    display: inline-block;
+    text-decoration: none;
+    font-size: 18px;
+    color: black;
+
+    }
+
+    .aaa:hover {
+    color: red;
+    }
+
+     .form-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+
+    }
+
+    .form-row label {
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+ label, select, input {
+    border-radius: 6px;
+    padding: 5px;
+  }
+
+        .custom-button {
+      border-radius: 5px; /* Задает радиус скругления углов */
+      background-color: #5AE8C6; /* Задает цвет фона кнопки */
+      color: #ffffff; /* Задает цвет текста на кнопке */
+      padding: 10px 20px; /* Задает отступы внутри кнопки */
+      border: none; /* Удаляет границу кнопки */
+      transition: transform 0.2s;
+      display: block;
+      margin-top: 20px;
+
+    }
+
+    .custom-button:hover {
+      background-color: #02E2A6; /* Измените цвет на желаемый */
+      color: white;
+      border-color: #02E2A6;
+      transform: scale(1.05);
+    }
+    </style>
+</head>
+<body>
+<div class="form-container">
+    <h3>Страхование здоровья пассажиров и водителей <a class="aaa"
+                                   href="https://asoba.by/wp-content/uploads/2022/09/Правила-№-28.pdf"
+                                   target="_blank" download> <img
+        src="{{url_for('static', filename = 'image/file-earmark-arrow-down.svg')}}" alt="Маленькая картинка">
+</a>
+</h3>
+    <form action="/insure_health" method="POST">
+        <div class="form-row">
+            <label>Вариант страхования:</label>
+            <select id="insurance_option" name="insurance_option">
+                <option value="system_places">По системе мест</option>
+                <option value="flat_system">По паушальной системе</option>
+            </select>
+        </div>
+        <div class="form-row">
+            <label>Срок действия договора: c</label>
+            <input type="date" id="start-date" name="start_date" onchange="setEndDate()" placeholder="Выберите дату">
+
+            <label>по</label>
+            <input type="date" id="end-date" name="end_date" readonly>
+        </div>
+
+        <label>Число мест:</label>
+        <input type="number" id="number_of_seats" name="number_of_seats" min="1" placeholder="Введите число мест">
+
+        <div id="individual_insurance" style="display: none;">
+            <label>Страховая сумма для водителя:</label>
+            <input type="number" name="driver_insurance_sum" min="0"
+                   placeholder="Введите страховую сумму для водителя">
+            <label>Страховая сумма для каждого пассажира:</label>
+            <input type="number" name="passenger_insurance_sum" min="0"
+                   placeholder="Введите страховую сумму для каждого пассажира">
+
+        </div>
+        <div id="shared_insurance" style="display: none;">
+            <label>Общая страховая сумма:</label>
+            <input type="number" name="total_insurance_sum" min="0" placeholder="Введите общую страховую сумму">
+        </div>
+
+        <label>ФИО водителя:</label>
+        <input type="text" name="driver_name" placeholder="Введите ФИО водителя">
+
+        <label>ФИО пассажиров:</label>
+        <textarea name="passenger_names" placeholder="Введите ФИО пассажиров"></textarea>
+
+        <label>Дата рождения водителя:</label>
+        <input type="date" name="driver_birthdate" placeholder="Введите дату рождения водителя">
+
+        <label>Дата рождения пассажиров:</label>
+        <textarea name="passenger_birthdates" placeholder="Введите даты рождения пассажиров"></textarea>
+
+        <label>Номер телефона:</label>
+        <input type="text" name="phone_number" placeholder="Введите номер телефона">
+
+        <label>Стоимость страховки:</label>
+        <span id="cost_value"></span>
+        <input type="hidden" name="insurance_cost">
+
+        <button type="submit" class="custom-button">Отправить</button>
+    </form>
+</div>
+<script>
+    // При изменении значения поля "Вариант страхования"
+    document.getElementById("insurance_option").addEventListener("change", function() {
+        var option = this.value;
+        var individualInsurance = document.getElementById("individual_insurance");
+        var sharedInsurance = document.getElementById("shared_insurance");
+
+        if (option === "system_places") {
+            individualInsurance.style.display = "block";
+            sharedInsurance.style.display = "none";
+        } else if (option === "flat_system") {
+            individualInsurance.style.display = "none";
+            sharedInsurance.style.display = "block";
+        }
+    });
+</script>
+<script>
+    // Получаем текущую дату
+    var today = new Date().toISOString().split('T')[0];
+
+    // Находим поле ввода даты по его ID
+    var startDateInput = document.getElementById('start-date');
+
+    // Устанавливаем минимальную дату для поля ввода
+    startDateInput.min = today;
+</script>
+<script>
+    function setEndDate() {
+        var startDate = document.getElementById('start-date').value;
+        var endDate = new Date(startDate);
+        endDate.setFullYear(endDate.getFullYear() + 1);
+
+        var endDateInput = document.getElementById('end-date');
+        endDateInput.value = endDate.toISOString().substr(0, 10);
+    }
+</script>
+<script>
+    // Валидация формы перед отправкой
+    var form = document.querySelector('form');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault(); // Предотвращаем отправку формы
+
+        // Выполняем валидацию полей
+        var addressInput = document.querySelector('input[name="address"]');
+        var areaInput = document.querySelector('input[name="area"]');
+        var insureSumInput = document.querySelector('input[name="insure_sum"]');
+        var durationInput = document.querySelector('input[name="duration"]');
+        var ownerNameInput = document.querySelector('input[name="owner_name"]');
+        var phoneNumberInput = document.querySelector('input[name="phone_number"]');
+        var emailInput = document.querySelector('input[name="email"]');
+
+        if (addressInput.value === '') {
+            alert('Пожалуйста, введите адрес объекта недвижимости.');
+            return;
+        }
+
+        if (areaInput.value === '' || areaInput.value <= 0) {
+            alert('Пожалуйста, введите корректную площадь объекта недвижимости.');
+            return;
+        }
+
+        if (insureSumInput.value === '' || insureSumInput.value <= 0) {
+            alert('Пожалуйста, введите корректную страховую сумму.');
+            return;
+        }
+
+        if (durationInput.value === '' || durationInput.value <= 0) {
+            alert('Пожалуйста, введите корректную длительность страхования.');
+            return;
+        }
+
+        if (ownerNameInput.value === '') {
+            alert('Пожалуйста, введите имя и фамилию владельца.');
+            return;
+        }
+
+        if (phoneNumberInput.value === '') {
+            alert('Пожалуйста, введите номер телефона.');
+            return;
+        }
+
+        if (emailInput.value === '') {
+            alert('Пожалуйста, введите адрес электронной почты.');
+            return;
+        }
+
+        // Если все поля заполнены корректно, отправляем данные на сервер
+        form.submit();
+    });
+</script>
+<script>
+    // Функция для расчета стоимости страхования
+function calculateInsuranceCost() {
+    var insuranceOption = document.getElementById("insurance_option").value;
+    var numberOfSeats = parseInt(document.getElementById("number_of_seats").value);
+    var driverInsuranceSum = parseFloat(document.getElementsByName("driver_insurance_sum")[0].value);
+    var passengerInsuranceSum = parseFloat(document.getElementsByName("passenger_insurance_sum")[0].value);
+    var totalInsuranceSum = parseFloat(document.getElementsByName("total_insurance_sum")[0].value);
+
+    var driverCoefficient = 1.2; // Коэффициент для страховой суммы водителя
+    var passengerCoefficient = 0.8; // Коэффициент для страховой суммы пассажиров
+    var totalCoefficient = 1.5; // Коэффициент для общей страховой суммы
+
+    var insuranceCost = 0;
+
+    if (insuranceOption === "system_places") {
+        insuranceCost = (driverInsuranceSum * driverCoefficient + passengerInsuranceSum * passengerCoefficient * (numberOfSeats - 1)) / numberOfSeats;
+    } else if (insuranceOption === "flat_system") {
+        insuranceCost = totalInsuranceSum * totalCoefficient / numberOfSeats;
+    }
+
+    document.getElementById("cost_value").textContent = insuranceCost.toFixed(2);
+    document.getElementsByName("insurance_cost")[0].value = insuranceCost.toFixed(2);
+}
+
+// Обработчик события изменения варианта страхования
+document.getElementById("insurance_option").addEventListener("change", function() {
+    var insuranceOption = this.value;
+
+    if (insuranceOption === "system_places") {
+        document.getElementById("individual_insurance").style.display = "block";
+        document.getElementById("shared_insurance").style.display = "none";
+    } else if (insuranceOption === "flat_system") {
+        document.getElementById("individual_insurance").style.display = "none";
+        document.getElementById("shared_insurance").style.display = "block";
+    }
+
+    calculateInsuranceCost();
+});
+
+// Обработчик события изменения числа мест
+document.getElementById("number_of_seats").addEventListener("change", function() {
+    calculateInsuranceCost();
+});
+
+// Обработчик события изменения страховых сумм
+document.getElementsByName("driver_insurance_sum")[0].addEventListener("change", function() {
+    calculateInsuranceCost();
+});
+
+document.getElementsByName("passenger_insurance_sum")[0].addEventListener("change", function() {
+    calculateInsuranceCost();
+});
+
+document.getElementsByName("total_insurance_sum")[0].addEventListener("change", function() {
+    calculateInsuranceCost();
+});
+
+// Вызов функции для начального расчета стоимости страхования
+calculateInsuranceCost();
+</script>
+
+
+</body>
+</html>
+{% endblock %}

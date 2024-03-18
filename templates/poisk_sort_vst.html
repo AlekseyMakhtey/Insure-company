@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #e5e5e5;
+        }
+    </style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" href="http://127.0.0.1:5000/static/image/flower1.svg"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{url_for('static', filename = 'css/main.css')}}">
+    <title>Администрирование</title>
+</head>
+<body>
+<div class="container">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        <div class="col-md-3 mb-2 mb-md-0">
+            <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
+                <img class="header__image" src="{{url_for('static', filename = 'image/flower1.svg')}}" alt="flower">
+            </a>
+        </div>
+
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="{{url_for('admin')}}" class="nav-link px-2 link-secondary">Аналитика</a></li>
+            <li><a href="{{url_for('jsonchik')}}" class="nav-link px-2">Экспорт</a></li>
+            <li><a href="{{url_for('import_json')}}" class="nav-link px-2">Импорт</a></li>
+            <li><a href="{{url_for('poisk_sort_vst')}}" class="nav-link px-2">Заявки пользователей</a></li>
+            <li><a href="{{url_for('strax')}}" class="nav-link px-2">Страхование зелёной карты</a></li>
+            <li><a href="{{url_for('main')}}" class="nav-link px-2">Редактирование жилища</a></li>
+                        <li><a href="{{url_for('sign_in')}}" class="nav-link px-2">Выйти</a></li>
+
+        </ul>
+    </header>
+
+
+    <h1 class="centered-text">Сортировка и поиск вопросов</h1><br>
+
+    <form method="POST" action="{{ url_for('poisk_sort_vst') }}">
+        <label for="sort_option">Выберите сортировку:</label>
+        <select name="sort_option" id="sort_option">
+            <option value="">Без сортировки</option>
+            <option value="id">По ID</option>
+            <option value="question">По вопросу</option>
+        </select>
+        <input class="btn-outline-primary" type="submit" value="Применить">
+    </form><br>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Вопрос</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for question in questions %}
+            <tr>
+                <td>{{ question[0] }}</td>
+                <td>{{ question[1] }}</td>
+                <td>{{ question[2] }}</td>
+                <td>{{ question[3] }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('delete_question', question_id=question[0]) }}">
+                        <button type="submit">Удалить</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+        <div class="col-md-4 d-flex align-items-center">
+            <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+                <svg class="bi" width="30" height="24">
+                    <use xlink:href="#bootstrap"></use>
+                </svg>
+            </a>
+            <span class="mb-3 mb-md-0 text-body-secondary">© 2023 Company, Inc</span>
+        </div>
+
+        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+            <li class="ms-3"><a class="text-body-secondary" href="#">
+                <svg class="bi" width="24" height="24">
+                    <img class="footer__image" src="{{url_for('static', filename = 'image/twitter.svg')}}"
+                         alt="twitter"></svg>
+            </a></li>
+            <li class="ms-3"><a class="text-body-secondary" href="#">
+                <svg class="bi" width="24" height="24">
+                    <img class="footer__image" src="{{url_for('static', filename = 'image/instagram.svg')}}"
+                         alt="instagram"></svg>
+            </a></li>
+            <li class="ms-3"><a class="text-body-secondary" href="#">
+                <svg class="bi" width="24" height="24">
+                    <img class="footer__image" src="{{url_for('static', filename = 'image/facebook.svg')}}" alt="meta">
+                </svg>
+            </a></li>
+
+        </ul>
+    </footer>
+</div>
+</body>
+</html>

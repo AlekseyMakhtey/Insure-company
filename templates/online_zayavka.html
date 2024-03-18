@@ -1,0 +1,225 @@
+{% extends 'base_user.html' %}
+
+{% block Title%}
+Страхование транспорта для физическиз лиц
+{% endblock %}
+
+{% block body %}
+<style>
+    .photo-button {
+      display: inline-block;
+      text-decoration: none;
+      color: black;
+      margin-top: 10px;
+      transition: transform 0.5s ease;
+    }
+
+    .photo-button img {
+      width: 280px;
+      height: auto;
+      margin-right: 20px;
+      margin-left: 20px;
+      border-radius: 8px;
+    }
+
+    .photo-button:hover {
+      transform: scale(1.05);
+    }
+
+    .text_image {
+    margin-left: 20px;
+    margin-top: 10px;
+    font-weight: 500;
+    }
+
+    .all_textt {
+    margin-top: 30px;
+    font-size: 18px
+    }
+
+    .all_text {
+    margin-top: 20px;
+    font-size: 18px
+    }
+
+    .zagolovok {
+    margin-top: 40px;
+    }
+
+
+    .form-group {
+        margin-top: 10px;
+    }
+
+    label {
+        padding: 10px;
+        display: block;
+    }
+
+    input[type="text"],
+    input[type="email"] {
+        width: 50%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+    }
+
+    .custom-button {
+      display: block;
+      border-radius: 5px; /* Задает радиус скругления углов */
+      background-color: #5AE8C6; /* Задает цвет фона кнопки */
+      color: #ffffff; /* Задает цвет текста на кнопке */
+      padding: 10px 20px; /* Задает отступы внутри кнопки */
+      border: none; /* Удаляет границу кнопки */
+      transition: transform 0.2s;
+      margin-top: 40px;
+    }
+
+    .custom-button:hover {
+      background-color: #02E2A6; /* Измените цвет на желаемый */
+      color: white;
+      border-color: #02E2A6;
+      transform: scale(1.05);
+    }
+
+    .checkbox-container {
+        margin-top: 20px;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .checkbox-container input[type="checkbox"] {
+        margin-right: 5px;
+    }
+
+     .custom-button.disabled {
+        opacity: 0.5;
+        pointer-events: none;
+        cursor: not-allowed;
+    }
+
+    .custom-button.enabled {
+        cursor: pointer;
+    }
+
+    .custom-button.enabled:hover {
+        cursor: pointer;
+    }
+
+    .custom-button.disabled:hover {
+        cursor: crosshair;
+    }
+
+#success-popup {
+  display: none;
+  position: fixed;
+  top: 40%;
+  right: 40%;
+  background-color: #fff;
+  padding: 30px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.close-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+  color: #000;
+  cursor: pointer;
+}
+
+.popup-text {
+  margin-top: 30px;
+  font-size: 18px;
+}
+
+</style>
+
+<script>
+    function showPopup() {
+        document.getElementById("success-popup").style.display = "block";
+    }
+
+    function closePopup() {
+        document.getElementById("success-popup").style.display = "none";
+    }
+</script>
+
+
+<h1>Оставить заявку</h1>
+
+<p class="all_text">Оставьте заявку, и наши специалисты свяжутся с Вами в рабочее время:</p>
+<p class="all_text">пн-чт: 08:30-17:30 (обед 12:30-13:15)</p>
+<p class="all_text">пт: 08:30-16:15 (обед 12:30-13:15)</p>
+<p class="all_text">Оставьте заявку, и наши специалисты свяжутся с Вами в рабочее время:</p>
+
+<form action="/online_zayavka" method='POST'>
+
+
+<div class="form-group">
+    <label for="email">Email адрес:</label>
+    <input type="email" id="email" name="email" placeholder="name@example.com" value="{{ email }}">
+</div>
+
+<div class="form-group">
+    <label for="phone">Номер телефона:</label>
+    <input type="text" id="phone" name="phone" value="+375" oninput="formatPhoneNumber()" maxlength="13">
+</div>
+
+<div class="form-group">
+    <label for="question">Ваш вопрос:</label>
+    <input type="text" id="question" name="question" placeholder="Введите текст...">
+</div>
+
+
+<div class="checkbox-container">
+    <input class="form-check-input" type="checkbox" value="agree" id="flexCheckDefault" name="agree">
+    <label class="form-check-label" for="flexCheckDefault">
+        I agree to the terms and conditions
+    </label>
+</div>
+
+<button type="submit" class="custom-button disabled" disabled onclick="showPopup(); return false;">Отправить</button>
+</form>
+
+<!--<div id="success-popup">-->
+<!--  <button class="close-button" onclick="closePopup()">Х</button>-->
+<!--  <p class="popup-text">Ваше вопрос отправлен. Ожидайте ответа</p>-->
+<!--</div>-->
+
+<script>
+    function showPopup() {
+        document.getElementById("success-popup").style.display = "block";
+        // Добавьте следующую строку, чтобы отключить кнопку отправки
+        document.querySelector('.custom-button').setAttribute('disabled', 'disabled');
+    }
+</script>
+
+
+
+<script>
+
+    const checkbox = document.getElementById('flexCheckDefault');
+    const button = document.querySelector('.custom-button');
+
+    checkbox.addEventListener('change', function() {
+        if (checkbox.checked) {
+            button.classList.remove('disabled');
+            button.classList.add('enabled');
+            button.removeAttribute('disabled');
+        } else {
+            button.classList.remove('enabled');
+            button.classList.add('disabled');
+            button.setAttribute('disabled', 'disabled');
+        }
+    });
+</script>
+
+
+
+{% endblock %}

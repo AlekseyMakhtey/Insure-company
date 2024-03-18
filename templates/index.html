@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block Title%}
+Главная страница
+{% endblock %}
+
+{% block body %}
+<head>
+  <title>Страховая компания</title>
+  <style>
+    /* Общие стили */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Шапка */
+    .header {
+      background-color: #75bfe0;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .header h1 {
+      margin: 0;
+    }
+
+    /* Контент */
+    .content {
+      background-color: #f2f8fd;
+      padding: 50px;
+      text-align: center;
+    }
+
+    .content h2 {
+      color: #75bfe0;
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+
+    .content p {
+      color: #333;
+      font-size: 18px;
+      line-height: 1.5;
+    }
+
+    /* Карточки услуг */
+    .service-card {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .service-card h3 {
+      color: #333;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .service-card p {
+      color: #666;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    /* Футер */
+    .footer {
+      background-color: #75bfe0;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .footer p {
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Добро пожаловать в нашу страховую компанию</h1>
+  </div>
+
+  <div class="content">
+    <h2>Мы заботимся о вашей безопасности и защите</h2>
+    <p>Мы предлагаем широкий спектр страховых услуг для защиты вас и ваших близких. Наша команда профессионалов готова помочь вам с выбором наилучшего плана страхования.</p>
+
+    <div class="service-card">
+      <h3>Автомобильное страхование</h3>
+      <p>Защитите свой автомобиль с нашими надежными страховыми планами и получите мир и спокойствие на дороге.</p>
+    </div>
+
+    <div class="service-card">
+      <h3>Страхование жилья</h3>
+      <p>Обеспечьте защиту вашего дома или квартиры от различных рисков и непредвиденных ситуаций.</p>
+    </div>
+      <div class="service-card">
+      <h3>Страхование здоровья</h3>
+      <p>Обеспечьте защиту вашего здоровья от различных рисков и непредвиденных ситуаций.</p>
+    </div>
+  </div>
+
+
+</body>
+{% endblock %}

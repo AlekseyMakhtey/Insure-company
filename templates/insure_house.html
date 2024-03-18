@@ -1,0 +1,320 @@
+{% extends 'base_user.html' %}
+
+{% block Title %}
+Страхование домов/квартир
+{% endblock %}
+
+{% block body %}
+<html>
+<head>
+    <style>
+        body {
+              background-color: white;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              height: 100vh;
+              margin: 0;
+            }
+
+            .form-container {
+              margin-top: 500px;
+              background-color: #f2f2f2;
+              border-radius: 10px; /* Закругление углов формы */
+              padding: 20px;
+              width: 1296px;
+            }
+
+
+
+            .form-container label {
+              display: block;
+              margin-bottom: 10px;
+            }
+
+            .form-container input[type="text"] {
+              width: 100%;
+              padding: 5px;
+              border-radius: 10px; /* Закругление углов текстовых полей */
+              border: 1px solid #ccc;
+            }
+
+    .aaa {
+    display: inline-block;
+    text-decoration: none;
+    font-size: 18px;
+    color: black;
+
+    }
+
+    .aaa:hover {
+    color: red;
+    }
+
+     .form-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+
+    }
+
+    .form-row label {
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+ label, select, input {
+    border-radius: 6px;
+    padding: 5px;
+  }
+
+        .custom-button {
+      border-radius: 5px; /* Задает радиус скругления углов */
+      background-color: #5AE8C6; /* Задает цвет фона кнопки */
+      color: #ffffff; /* Задает цвет текста на кнопке */
+      padding: 10px 20px; /* Задает отступы внутри кнопки */
+      border: none; /* Удаляет границу кнопки */
+      transition: transform 0.2s;
+      display: block;
+      margin-top: 20px;
+
+    }
+
+    .custom-button:hover {
+      background-color: #02E2A6; /* Измените цвет на желаемый */
+      color: white;
+      border-color: #02E2A6;
+      transform: scale(1.05);
+    }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h3>Страхование жилья <a class="aaa"
+                                   href="https://asoba.by/wp-content/uploads/2023/11/Правила-страхования-39-с-памяткой.pdf"
+                                   target="_blank" download> <img
+        src="{{url_for('static', filename = 'image/file-earmark-arrow-down.svg')}}" alt="Маленькая картинка">
+</a>
+</h3>
+    <form action="/insure_house" method="POST">
+        <div class="form-row">
+            <label>Тип объекта недвижимости:</label>
+            <select id="property_type" name="property_type">
+                <option value="Дом">Дом</option>
+                <option value="Квартира">Квартира</option>
+            </select>
+        </div>
+        <div class="form-row">
+        <label>Срок действия договора: c</label>
+        <input type="date" id="start-date" name="start_date" onchange="setEndDate()" placeholder="Выберите дату">
+
+        <label>по</label>
+        <input type="date" id="end-date" name="end_date" readonly>
+        </div>
+        <label>Адрес объекта недвижимости:</label>
+        <input type="text" name="address" placeholder="Введите адрес">
+
+        <label>Площадь объекта недвижимости (в квадратных метрах):</label>
+        <input type="number" name="area" min="0" placeholder="Введите площадь">
+
+        <label>Страховая сумма BYN:</label>
+        <input type="number" name="insure_sum" min="0" placeholder="Введите страховую сумму">
+
+        <label>Длительность страхования (в годах):</label>
+        <input type="number" name="duration" min="0" placeholder="Введите длительность">
+
+        <label>ФИО владельца:</label>
+        <input type="text" name="owner_name" placeholder="Введите ФИО">
+
+        <label>Номер телефона:</label>
+        <input type="text" name="phone_number" placeholder="Введите номер телефона">
+
+        <label>Дополнительные опции:</label>
+        <div class="form-row">
+            <input type="checkbox" id="option1" name="options[]" value="Пожарная сигнализация">
+            <label for="option1">Пожарная сигнализация</label>
+        </div>
+        <div class="form-row">
+            <input type="checkbox" id="option2" name="options[]" value="Охранная система">
+            <label for="option2">Охранная система</label>
+        </div>
+        <div class="form-row">
+            <input type="checkbox" id="option3" name="options[]" value="Водосточная система">
+            <label for="option3">Водосточная система</label>
+        </div>
+
+        <div class="form-row">
+            <label>Стоимость страховки:</label>
+            <span id="cost_value"></span>
+            <input type="hidden" name="all_cost"> <!-- добавленное поле для передачи стоимости на сервер -->
+        </div>
+
+        <button type="submit" class="custom-button">Отправить</button>
+    </form>
+</div>
+<script>
+  // Получаем текущую дату
+  var today = new Date().toISOString().split('T')[0];
+
+  // Находим поле ввода даты по его ID
+  var startDateInput = document.getElementById('start-date');
+
+  // Устанавливаем минимальную дату для поля ввода
+  startDateInput.min = today;
+</script>
+<script>
+    function setEndDate() {
+        var startDate = document.getElementById('start-date').value;
+        var endDate = new Date(startDate);
+        endDate.setFullYear(endDate.getFullYear() + 1);
+
+        var endDateInput = document.getElementById('end-date');
+        endDateInput.value = endDate.toISOString().substr(0, 10);
+    }
+</script>
+<script>
+    // Валидация формы перед отправкой
+    var form = document.querySelector('form');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault(); // Предотвращаем отправку формы
+
+        // Выполняем валидацию полей
+        var addressInput = document.querySelector('input[name="address"]');
+        var areaInput = document.querySelector('input[name="area"]');
+        var insureSumInput = document.querySelector('input[name="insure_sum"]');
+        var durationInput = document.querySelector('input[name="duration"]');
+        var ownerNameInput = document.querySelector('input[name="owner_name"]');
+        var phoneNumberInput = document.querySelector('input[name="phone_number"]');
+        var emailInput = document.querySelector('input[name="email"]');
+
+        if (addressInput.value === '') {
+            alert('Пожалуйста, введите адрес объекта недвижимости.');
+            return;
+        }
+
+        if (areaInput.value === '' || areaInput.value <= 0) {
+            alert('Пожалуйста, введите корректную площадь объекта недвижимости.');
+            return;
+        }
+
+        if (insureSumInput.value === '' || insureSumInput.value <= 0) {
+            alert('Пожалуйста, введите корректную страховую сумму.');
+            return;
+        }
+
+        if (durationInput.value === '' || durationInput.value <= 0) {
+            alert('Пожалуйста, введите корректную длительность страхования.');
+            return;
+        }
+
+        if (ownerNameInput.value === '') {
+            alert('Пожалуйста, введите имя и фамилию владельца.');
+            return;
+        }
+
+        if (phoneNumberInput.value === '') {
+            alert('Пожалуйста, введите номер телефона.');
+            return;
+        }
+
+        if (emailInput.value === '') {
+            alert('Пожалуйста, введите адрес электронной почты.');
+            return;
+        }
+
+        // Если все поля заполнены корректно, отправляем данные на сервер
+        form.submit();
+    });
+</script>
+<script>
+    // Функция для обновления стоимости страхования
+    function updateInsuranceCost() {
+        var areaInput = document.querySelector('input[name="area"]');
+        var propertyTypeInput = document.querySelector('select[name="property_type"]');
+        var optionsInputs = document.querySelectorAll('input[name="options[]"]');
+        var costElement = document.getElementById('cost_value');
+        var allCostInput = document.querySelector('input[name="all_cost"]');
+        var insureSumInput = document.querySelector('input[name="insure_sum"]');
+        var durationInput = document.querySelector('input[name="duration"]');
+
+        var area = parseFloat(areaInput.value);
+        var propertyType = propertyTypeInput.value;
+        var options = [];
+        optionsInputs.forEach(function (input) {
+            if (input.checked) {
+                options.push(input.value);
+            }
+        });
+        var insureSum = parseFloat(insureSumInput.value);
+        var duration = parseInt(durationInput.value);
+
+        // Проверяем корректность значения площади
+        if (isNaN(area) || area <= 0) {
+            costElement.textContent = 'Введите корректную площадь';
+            return;
+        }
+
+        // Выполняем расчет стоимости в зависимости от типа объекта и площади
+        var baseCost = 0;
+        if (propertyType === 'Дом') {
+            baseCost = 10; // Базовая стоимость для дома
+        } else if (propertyType === 'Квартира') {
+            baseCost = 8; // Базовая стоимость для квартиры
+        }
+
+        var cost = baseCost * area;
+
+        // Добавляем дополнительную стоимость за выбранные опции
+        var optionCost = 0;
+        if (options.includes('Пожарная сигнализация')) {
+            optionCost += 200;
+        }
+        if (options.includes('Охранная система')) {
+            optionCost += 300;
+        }
+        if (options.includes('Водосточная система')) {
+            optionCost += 150;
+        }
+
+        cost += optionCost;
+
+        // Учитываем страховую сумму
+        cost += (insureSum*0.2);
+
+        // Учитываем длительность страхования
+        if (!isNaN(duration) && duration > 0) {
+            cost *= duration;
+        }
+
+        // Отображаем стоимость страхования
+        costElement.textContent = cost.toFixed(2) + ' BYN';
+
+        // Записываем стоимость в скрытое поле
+        allCostInput.value = cost.toFixed(2);
+    }
+
+    // Инициализируем стоимость страхования при загрузке страницы
+    updateInsuranceCost();
+
+    // Обновляем стоимость при изменении полей формы
+    var areaInput = document.querySelector('input[name="area"]');
+    var propertyTypeInput = document.querySelector('select[name="property_type"]');
+    var optionsInputs = document.querySelectorAll('input[name="options[]"]');
+    var insureSumInput = document.querySelector('input[name="insure_sum"]');
+    var durationInput = document.querySelector('input[name="duration"]');
+
+    areaInput.addEventListener('input', updateInsuranceCost);
+    propertyTypeInput.addEventListener('change', updateInsuranceCost);
+
+    optionsInputs.forEach(function (input) {
+        input.addEventListener('change', updateInsuranceCost);
+    });
+
+    insureSumInput.addEventListener('input', updateInsuranceCost);
+    durationInput.addEventListener('input', updateInsuranceCost);
+</script>
+
+
+</body>
+</html>
+{% endblock %}
