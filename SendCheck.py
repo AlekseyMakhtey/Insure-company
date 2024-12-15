@@ -7,7 +7,7 @@ from email import encoders
 
 
 class SendCheck:
-    def __init__(self, receiver_email, sender_email="shurikm30@gmail.com", sender_password='jlkx fjay nrfj wmye'):
+    def __init__(self, receiver_email, sender_email="shurikm30@gmail.com", sender_password='xrbr poyj rcks hski'):
         self.receiver_email = receiver_email
         self.sender_email = sender_email
         self.sender_password = sender_password

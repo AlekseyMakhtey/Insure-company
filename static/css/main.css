@@ -28,14 +28,14 @@ footer {
 }
 
 .btn-outline-primary {
-  background-color: #5AE8C6; /* Измените цвет на желаемый */
+  background-color: #5AE8C6;
   border-color: #5AE8C6;
   color: white;
   transition: transform 0.2s;
 }
 
 .btn-outline-primary:hover {
-  background-color: #02E2A6; /* Измените цвет на желаемый */
+  background-color: #02E2A6;
   color: white;
   border-color: #02E2A6;
   transform: scale(1.05);
@@ -47,26 +47,24 @@ footer {
 }
 
 .span {
-  border-radius: 5px; /* Радиус скругления углов */
-  text-align: center; /* Выравнивание текста по центру */
+  border-radius: 5px;
+  text-align: center;
   color: darkblue;
-  padding: 5px; /* Отступы вокруг значения */
-  display: inline-block; /* Отображение в виде блока для применения ширины и высоты */
-  background-color: #02E2A6; /* Измените цвет на желаемый */
+  padding: 5px;
+  display: inline-block;
+  background-color: #02E2A6;
   margin-right: 20px;
 
 
 }
 
-
-
 span {
-  border-radius: 5px; /* Радиус скругления углов */
-  text-align: center; /* Выравнивание текста по центру */
+  border-radius: 5px;
+  text-align: center;
   color: darkblue;
-  padding: 5px; /* Отступы вокруг значения */
-  display: inline-block; /* Отображение в виде блока для применения ширины и высоты */
-  background-color: #02E2A6; /* Измените цвет на желаемый */
+  padding: 5px;
+  display: inline-block;
+  background-color: #02E2A6;
 }
 
 

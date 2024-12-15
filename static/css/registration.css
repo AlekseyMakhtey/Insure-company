@@ -13,8 +13,8 @@ body {
 
 .form-registration {
   width: 100%;
-  max-width: 450px; /* Increase the max-width value as desired */
-  margin: 0 auto; /* Center the content horizontally */
+  max-width: 450px;
+  margin: 0 auto;
 }
 
 .registration_image {

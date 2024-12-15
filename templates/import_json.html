@@ -1,30 +1,30 @@
 <!DOCTYPE html>
-<html>
-<style>
-
-    .centered-text {
-        margin-top:50px;
-        margin-bottom:20px;
-        text-align: center;
-    }
-</style>
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="http://127.0.0.1:5000/static/image/flower1.svg"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{url_for('static', filename = 'css/main.css')}}">
-    <title>Администрирование</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+    <title>Импорт данных из JSON</title>
+    <style>
+        .centered-text {
+            margin-top: 50px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .left-aligned {
+            text-align: left;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
         <div class="col-md-3 mb-2 mb-md-0">
             <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
-                <img class="header__image" src="{{url_for('static', filename = 'image/flower1.svg')}}" alt="flower">
+                <img class="header__image" src="{{url_for('static', filename='image/flower1.svg')}}" alt="flower">
             </a>
         </div>
 
@@ -35,19 +35,32 @@
             <li><a href="{{url_for('poisk_sort_vst')}}" class="nav-link px-2">Заявки пользователей</a></li>
             <li><a href="{{url_for('strax')}}" class="nav-link px-2">Страхование зелёной карты</a></li>
             <li><a href="{{url_for('main')}}" class="nav-link px-2">Редактирование жилища</a></li>
-                        <li><a href="{{url_for('sign_in')}}" class="nav-link px-2">Выйти</a></li>
-
+            <li><a href="{{url_for('sign_in')}}" class="nav-link px-2">Выйти</a></li>
         </ul>
     </header>
 
-    <h2 class="centered-text">Импорт данных из JSON</h2><br><br><br>
+    <h2 class="centered-text">Импорт данных из JSON</h2><br><br>
+
+    <div class="left-aligned">
+        <p>Для импорта данных из файла JSON, выполните следующие шаги:</p>
+        <ol>
+            <li>Нажмите кнопку "Выбрать файл" и выберите файл JSON на вашем компьютере.</li>
+            <li>Убедитесь, что файл соответствует необходимому формату.</li>
+            <li>Нажмите кнопку "Импортировать" для загрузки данных.</li>
+            <li>После завершения импорта вы получите уведомление о результате.</li>
+        </ol><br>
+    </div>
+
     <form action="/import_json" method="post" enctype="multipart/form-data">
         {% if message %}
-        <p>{{ message }}</p>
+        <p class="text-success">{{ message }}</p>
         {% endif %}
-        <input type="file" name="file" accept=".json">
-        <input class="btn-outline-primary" type="submit" value="Импортировать">
-    </form><br><br><br><br><br><br><br><br><br><br><br><br>
+        <div class="mb-3">
+            <label for="file" class="form-label">Выберите файл:</label>
+            <input type="file" name="file" id="file" accept=".json" class="form-control" required>
+        </div>
+        <input class="btn btn-outline-primary" type="submit" value="Импортировать">
+    </form><br><br>
 
     <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
         <div class="col-md-4 d-flex align-items-center">
@@ -62,20 +75,16 @@
         <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
             <li class="ms-3"><a class="text-body-secondary" href="#">
                 <svg class="bi" width="24" height="24">
-                    <img class="footer__image" src="{{url_for('static', filename = 'image/twitter.svg')}}"
-                         alt="twitter"></svg>
+                    <img class="footer__image" src="{{url_for('static', filename='image/twitter.svg')}}" alt="twitter"></svg>
             </a></li>
             <li class="ms-3"><a class="text-body-secondary" href="#">
                 <svg class="bi" width="24" height="24">
-                    <img class="footer__image" src="{{url_for('static', filename = 'image/instagram.svg')}}"
-                         alt="instagram"></svg>
+                    <img class="footer__image" src="{{url_for('static', filename='image/instagram.svg')}}" alt="instagram"></svg>
             </a></li>
             <li class="ms-3"><a class="text-body-secondary" href="#">
                 <svg class="bi" width="24" height="24">
-                    <img class="footer__image" src="{{url_for('static', filename = 'image/facebook.svg')}}" alt="meta">
-                </svg>
+                    <img class="footer__image" src="{{url_for('static', filename='image/facebook.svg')}}" alt="meta"></svg>
             </a></li>
-
         </ul>
     </footer>
 </div>

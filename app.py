@@ -1,32 +1,11 @@
-from datetime import datetime
-from docx import Document
-from flask import Flask, render_template, request, session, json, redirect, url_for
+from flask import request, session, json, redirect, url_for
 import mysql.connector
-from flask_mail import Mail, Message
 from flask_bcrypt import Bcrypt
-from matplotlib.dates import DateFormatter
-from flask import send_from_directory
-from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import letter
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
-import os
-from reportlab.lib.styles import getSampleStyleSheet
-from reportlab.platypus import Paragraph
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.pdfbase.pdfmetrics import registerFontFamily
-from reportlab.lib import fonts
-from io import BytesIO
-from docx import Document
-from flask import Flask, render_template, make_response
+import seaborn as sns
+from flask import Flask, render_template
 import mysql.connector
 from mysql.connector import Error
 import openpyxl
-
-from fpdf import FPDF
-
 from flask_session import Session
 import re
 from SendCheck import SendCheck
@@ -128,9 +107,9 @@ def sending_sms_phone(text='Hello', receiver='+375297720598'):
         )
         print(receiver)
         return 'OK'
-    except:
-        return 'not OK'
-
+    except Exception as e:
+        print(f"Error: {str(e)}")
+        return f"Error: {str(e)}"
 
 def generate_code():
     random_number = random.randint(100000, 999999)
@@ -236,61 +215,37 @@ def about():
 
 @app.route("/admin")
 def admin():
-    # Подключение к базе данных MySQL
+    # Подключение и сбор данных
     connection = create_connection()
-    file_path = export_to_excel()
-    print("Файл сохранен по пути:", file_path)  # Создание курсора для выполнения SQL-запросов
     cursor = connection.cursor()
-
-    # Выполнение SQL-запроса для получения данных
     query = "SELECT DATE(start_date) AS day, SUM(insurance_cost) AS total_cost FROM insure_health GROUP BY day"
     cursor.execute(query)
-
-    # Извлечение результатов запроса
     data = cursor.fetchall()
-    dayss = []
-    total_costs = []
-    for row in data:
-        dayss.append(row[0])
-        total_costs.append(row[1])
-
-    # Закрытие соединения с базой данных
+    dayss, total_costs = zip(*data)
     cursor.close()
     connection.close()
 
-    # Построение графика для суммы
-    plt.figure(figsize=(6, 5))
-    plt.bar(dayss, total_costs)
+    # Стиль графиков
+    sns.set_theme(style="whitegrid")
 
-    # plt.xlabel('Дата')
-    plt.ylabel('Страховая сумма')
-    plt.title('График страховой суммы по дням')
-    plt.xticks(rotation=25)
+    # График страховой суммы
+    plt.figure(figsize=(6, 3))
+    plt.bar(dayss, total_costs, color=sns.color_palette("muted")[0], edgecolor="black", linewidth=1, alpha=0.8)
+    plt.ylabel("Страховая сумма")
+    plt.title("График страховой суммы по дням")
+    plt.xticks(rotation=45, fontsize=9)
     plt.tight_layout()
+    plt.grid(axis="y", linestyle="--", alpha=0.7)
 
-    # Форматирование оси x для отображения дат
-    date_formatter = DateFormatter("%Y-%m-%d")
-    plt.gca().xaxis.set_major_formatter(date_formatter)
-
-    # Сохранение графика в файл
+    # Сохранение графика
     graph_file_cost = 'static/image/graph.png'
-    try:
-        plt.savefig(graph_file_cost)
-        print("Файл graph.png сохранен успешно.")
-    except Exception as e:
-        print("Ошибка сохранения файла graph.png:", str(e))
+    plt.savefig(graph_file_cost, dpi=200)
+    plt.close()
 
+    # Второй график: Количество страхований
     db = create_connection()
-    # Получение данных из таблиц и подсчет суммы id по start_date
-    table_names = [
-        "insure_credit_card",
-        "insure_house",
-        "insure_health",
-        "insure_health_personal",
-        "insure_car_osgo_vn",
-        "insure_car_green_card"
-    ]
-
+    table_names = ["insure_credit_card", "insure_house", "insure_health",
+                   "insure_health_personal", "insure_car_osgo_vn", "insure_car_green_card"]
     data = {}
 
     for table_name in table_names:
@@ -299,26 +254,27 @@ def admin():
         cursor.execute(query)
         result = cursor.fetchall()
         data[table_name] = result
+    cursor.close()
 
-    # Создание гистограммы
-    plt.figure(figsize=(6, 5))
-
-    for table_name, result in data.items():
+    # Гистограмма
+    plt.figure(figsize=(6, 3))
+    for i, (table_name, result) in enumerate(data.items()):
         dates = [row[0] for row in result]
         sums = [row[1] for row in result]
-        plt.bar(dates, sums, label=table_name)
+        plt.bar(dates, sums, label=table_name, color=sns.color_palette("deep")[i], alpha=0.9)
 
-    # plt.xlabel("Дата")
     plt.ylabel("Количество страхований")
     plt.title("Количество страхований в зависимости от дня")
-    plt.legend()
-    plt.xticks(rotation=25)
+    plt.legend(fontsize=8)
+    plt.xticks(rotation=45, fontsize=9)
+    plt.grid(axis="y", linestyle="--", alpha=0.7)
     plt.tight_layout()
 
-    # Сохранение гистограммы в файл
-    plt.savefig("static/image/histogram.png")
+    # Сохранение графика
     graph_file_amount = 'static/image/histogram.png'
-    # Отображение HTML-шаблона с вставленным графиком
+    plt.savefig(graph_file_amount, dpi=200)
+    plt.close()
+
     return render_template('admin.html', graph_file_cost=graph_file_cost, graph_file_amount=graph_file_amount)
 
 
@@ -657,7 +613,8 @@ def edit():
             all_cost = %s
             WHERE id = %s
         """, (
-        email, phone_number, start_date, property_type, address, area, insure_sum, duration, owner_name, all_cost, id))
+            email, phone_number, start_date, property_type, address, area, insure_sum, duration, owner_name, all_cost,
+            id))
 
         db.commit()
         return redirect(url_for('main'))
@@ -974,7 +931,6 @@ def insure_credit_card():
         print('P2243:', p2243)
         print('phone_number:', phone_number)
 
-        generate_pdf(email, start_date, end_date, 'credit_card')
         # Отправка сообщения email
         ver = SendCheck(email)
         ver.sendCheck(body='Congratulations, you have successfully insured your credit card!')
@@ -1031,8 +987,6 @@ def insure_house():
         print('Duration:', duration)
         print('Owner Name:', owner_name)
         print('All Cost:', all_cost)
-
-        generate_pdf(email, start_date, end_date, name_doc='house')
 
         # Отправка сообщения email
         ver = SendCheck(email)
@@ -1095,8 +1049,6 @@ def insure_health():
         print('Passenger Birthdates:', passenger_birthdates)
         print('Phone Number:', phone_number)
         print('Insurance Cost:', insurance_cost)
-
-        generate_pdf(email, start_date, end_date, name_doc='health')
 
         # Отправка сообщения email
         ver = SendCheck(email)
@@ -1168,8 +1120,6 @@ def insure_health_personal():
         print('Insurance Cost:', insurance_cost)
         print('email:', email)
 
-        generate_pdf(email, start_date, end_date, name_doc='health_personal')
-
         # Отправка сообщения email
         ver = SendCheck(email)
         ver.sendCheck(body='Congratulations, you have successfully insured your health!')
@@ -1223,8 +1173,6 @@ def insure_car_osgo_vn():
         print('Phone Number:', phone_number)
         print('Insurance Cost:', insurance_cost)
         print('email:', email)
-
-        generate_pdf(email, start_date, end_date, name_doc='car_osgo')
 
         # Отправка сообщения email
         ver = SendCheck(email)
@@ -1281,8 +1229,6 @@ def insure_car_green_card():
 
         print('insurance_cost:', insurance_cost)
         print('Countries to Visit:', countries_str)
-
-        generate_pdf(email, start_date, end_date, name_doc='green_card')
 
         # Отправка сообщения email
         ver = SendCheck(email)
